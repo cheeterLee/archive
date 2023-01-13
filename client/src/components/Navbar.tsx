@@ -15,16 +15,17 @@ import {
 	DrawerFooter,
 	DrawerHeader,
 	DrawerOverlay,
-	Input,
+	useColorMode,
 } from "@chakra-ui/react"
 import logo from "../assets/logo.svg"
-import { HamburgerIcon, SunIcon } from "@chakra-ui/icons"
+import { HamburgerIcon, SunIcon, MoonIcon } from "@chakra-ui/icons"
 
 export interface INavbarProps {}
 
 const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const menuRef = useRef<any>()
+	const { colorMode, toggleColorMode } = useColorMode()
 
 	return (
 		<Flex
@@ -88,24 +89,11 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 					/>
 					<IconButton
 						aria-label="theme"
-						outline="none"
-						icon={<SunIcon />}
+						onClick={toggleColorMode}
+						icon={colorMode === 'dark' ? <MoonIcon /> : <SunIcon />}
 					/>
 					<Button>Connect Wallet</Button>
 				</Flex>
-				{/* <Flex w='100vw' h='100vh' bg='blackAlpha.300' zIndex={20} pos='fixed' top='0' left='0' overflow='auto'>
-                    <Flex
-                        flexDir='column'
-                        alignItems="center"
-                        gap="2rem"
-                        w='100vw'
-                        h='100vh'
-                    >
-                        <Link>Home</Link>
-                        <Link>Upload</Link>
-                        <Link>Gallery</Link>
-                    </Flex>
-                </Flex> */}
 				<Drawer
 					isOpen={isOpen}
 					placement="top"
