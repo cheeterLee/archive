@@ -1,18 +1,22 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App";
-import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
-import "./styles/globals.css";
+import React from "react"
+import { createRoot } from "react-dom/client"
+import App from "./App"
+import { BrowserRouter } from "react-router-dom"
+import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react"
+import { ChakraProvider } from '@chakra-ui/react'
+import theme from '../src/chakra/theme'
 
-// This is the chainId your dApp will work on.
-const activeChainId = ChainId.Mainnet;
+const container = document.getElementById("root")
+const root = createRoot(container!)
 
-const container = document.getElementById("root");
-const root = createRoot(container!);
 root.render(
-  <React.StrictMode>
-    <ThirdwebProvider desiredChainId={activeChainId}>
-      <App />
-    </ThirdwebProvider>
-  </React.StrictMode>
-);
+	<React.StrictMode>
+		<BrowserRouter>
+			<ThirdwebProvider desiredChainId={ChainId.Goerli}>
+				<ChakraProvider theme={theme}>
+					<App />
+				</ChakraProvider>
+			</ThirdwebProvider>
+		</BrowserRouter>
+	</React.StrictMode>
+)
