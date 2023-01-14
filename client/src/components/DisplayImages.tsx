@@ -14,8 +14,8 @@ const DisplayImages: React.FunctionComponent<IDisplayImagesProps> = ({
 	isLoading,
 	images,
 }) => {
-	//TODO navigate to detail page
-
+	//TODO 1. navigate to detail page
+	//TODO 2. sort the image by date
 	return (
 		<Box padding="1rem 3rem" display='flex' flexDirection='column' alignItems='center'>
 			<Heading as="h3" size="lg" padding='1rem'>
@@ -39,11 +39,12 @@ const DisplayImages: React.FunctionComponent<IDisplayImagesProps> = ({
 					Sorry...No images available
 				</Stack>
 			)}
+			
 			<Flex padding='1rem .5rem' gap='1.5rem' flexWrap='wrap'>
 				{!isLoading &&
 					images.length > 0 &&
 					images.map((image: any) => (
-						<ImageCard key={image.id} {...image} />
+						<ImageCard key={image.pId} {...image} />
 					))}
 			</Flex>
 		</Box>

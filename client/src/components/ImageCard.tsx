@@ -19,10 +19,10 @@ import { BsThreeDotsVertical } from 'react-icons/bs'
 export interface IImageCardProps {
     owner: string
     caption: string
-    imgUrl: string
+    imageUrl: string
 }
 
-const ImageCard: React.FunctionComponent<IImageCardProps> = ({ owner, caption, imgUrl }) => {
+const ImageCard: React.FunctionComponent<IImageCardProps> = ({ owner, caption, imageUrl }) => {
     
 
 	return (
@@ -46,7 +46,7 @@ const ImageCard: React.FunctionComponent<IImageCardProps> = ({ owner, caption, i
 			</CardBody>
 			<Image
 				objectFit="cover"
-				src={imgUrl}
+				src={imageUrl}
 				alt="image asset"
 			/>
 
