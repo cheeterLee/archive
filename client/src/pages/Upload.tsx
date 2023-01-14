@@ -12,6 +12,7 @@ import React, { FormEvent, useState } from "react"
 import { CustomDropzone } from "../components"
 import { Web3Storage } from "web3.storage"
 import { useContractContext } from "../context/ContractContext"
+import { useWalletContext } from "../context/WalletContext"
 
 const client = new Web3Storage({
 	token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDNlOERBMTYyRmQyQjY5OTZlMWQzZDUyNmUwZmY0MTM4NGI5Q2ZiRmIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzM1NzYyMzQ0ODUsIm5hbWUiOiJldmlkZW5jZSJ9.toX_pod8vFLzoWDY3Ws2EbwqjjZRSTpyKYc2SKT3rP8",
@@ -24,14 +25,14 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
     const toast = useToast()
 	// upload image file captured from CustomDropzone
 	const [uploadImage, setUploadImage] = useState<any>(null)
-	// imageUrl returned from ipfs and to write into smart contract
-	const [imageUrl, setImageUrl] = useState<string>("")
 	// state for caption input
 	const [caption, setCaption] = useState("")
     // state for loading
     const [isLoading, setIsLoading] = useState(false)
-    // destructure from context
+    // destructure from ContractContext
     const { createImageAsset } = useContractContext()
+    // destructure from WalletContext
+    const { isConnected } = useWalletContext()
 
 	const uploadFile = async () => {
 		const rootCid = await client.put([uploadImage])
@@ -40,20 +41,20 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 		const imageObjectBack = await res.files()
 		const { name } = imageObjectBack[0]
 		console.log("Image Url >>>", `https://${rootCid}.ipfs.w3s.link/${name}`)
-		setImageUrl(`https://${rootCid}.ipfs.w3s.link/${name}`)
+        const tempUrl = `https://${rootCid}.ipfs.w3s.link/${name}`
+        return tempUrl
 	}
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault()
 		console.log("submitting....")
-        console.log('imageUrl', imageUrl);
         setIsLoading(true)
         try {
             // upload file to ipfs
-            await uploadFile()
+            const imageUrl = await uploadFile()
             // communicate with blockchain
             console.log('caption', caption, 'url', imageUrl)
-            // await createImageAsset(caption, imageUrl)
+            await createImageAsset(caption, imageUrl)
             toast({
                 title: 'Successfully submitted :)',
                 status: 'success',
@@ -68,7 +69,6 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
         }
         setIsLoading(false)
         setCaption('')
-        setImageUrl('')
 	}
 
 	return (
@@ -93,7 +93,7 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 
 				<form onSubmit={handleSubmit}>
 					{uploadImage === null ? (
-						<CustomDropzone setUploadImage={setUploadImage} setImageUrl={setImageUrl} />
+						<CustomDropzone setUploadImage={setUploadImage} />
 					) : (
 						<Image p='2rem' w='400px' h='400px' objectFit='cover' src={URL.createObjectURL(uploadImage)} />
 					)}
@@ -104,7 +104,7 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 							onChange={(e) => setCaption(e.target.value)}
 							value={caption}
 						/>
-						<Button isLoading={isLoading} loadingText='submitting...' type="submit">Submit</Button>
+						<Button disabled={!isConnected} isLoading={isLoading} loadingText='submitting...' type="submit">Submit</Button>
 					</Stack>
 				</form>
 			</Flex>

@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom"
 import logo from "../assets/logo.svg"
 import { HamburgerIcon, SunIcon, MoonIcon } from "@chakra-ui/icons"
 import { useContractContext } from "../context/ContractContext"
+import { useWalletContext } from "../context/WalletContext"
 
 export interface INavbarProps {}
 
@@ -35,6 +36,8 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 	const navigate = useNavigate()
 	// destructure from ContractContext
 	const { connect, address } = useContractContext()
+	// destructure from WalletContext
+	const { setIsConnected } = useWalletContext()
 
 	return (
 		<Flex
@@ -118,6 +121,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 							} else {
 								try {
 									await connect()
+									setIsConnected(true)
 									toast({
 										title: 'Successfully connected :)',
 										status: 'success',

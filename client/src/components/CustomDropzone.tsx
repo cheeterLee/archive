@@ -4,11 +4,10 @@ import { useDropzone } from "react-dropzone"
 
 export interface ICustomDropzonePageProps {
     setUploadImage: (img: any) => void
-    setImageUrl: (imageUrl: string) => void
 }
 
 const CustomDropzonePage: React.FunctionComponent<ICustomDropzonePageProps> = (
-	{ setUploadImage, setImageUrl }
+	{ setUploadImage }
 ) => {
 	const onDrop = useCallback((acceptedFiles: any) => {
         const file = acceptedFiles[0]
