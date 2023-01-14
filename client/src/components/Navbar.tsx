@@ -69,9 +69,11 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 						xl: "flex",
 					}}
 				>
-					<Link>Home</Link>
-					<Link>Upload</Link>
-					<Link>Gallery</Link>
+					<Link href="/">Home</Link>
+					<Link href="/upload">Upload</Link>
+					<Link href="/gallery">Gallery</Link>
+					<Link href="/mint">Mint</Link>
+					<Link href="/contact">Contact</Link>
 				</Flex>
 				<Flex gap=".5rem">
 					<IconButton
@@ -90,7 +92,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 					<IconButton
 						aria-label="theme"
 						onClick={toggleColorMode}
-						icon={colorMode === 'dark' ? <MoonIcon /> : <SunIcon />}
+						icon={colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
 					/>
 					<Button>Connect Wallet</Button>
 				</Flex>
@@ -103,17 +105,21 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 					<DrawerOverlay />
 					<DrawerContent>
 						<DrawerCloseButton />
-						<DrawerHeader textAlign='center'>Archive.com</DrawerHeader>
+						<DrawerHeader textAlign="center">
+							Archive.com
+						</DrawerHeader>
 
 						<DrawerBody>
 							<Flex
 								alignItems="center"
 								gap="2rem"
-								flexDir='column'
+								flexDir="column"
 							>
-								<Link>Home</Link>
-								<Link>Upload</Link>
-								<Link>Gallery</Link>
+								<Link href="/">Home</Link>
+								<Link href="/upload">Upload</Link>
+								<Link href="/gallery">Gallery</Link>
+								<Link href="/mint">Mint</Link>
+								<Link href="/contact">Contact</Link>
 							</Flex>
 						</DrawerBody>
 
