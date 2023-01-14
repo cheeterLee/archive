@@ -3,7 +3,7 @@ import { extendTheme } from "@chakra-ui/react"
 const fonts = { mono: `'Menlo', monospace` }
 
 const breakpoints = {
-    xs: "30em",
+	xs: "30em",
 	sm: "40em",
 	md: "52em",
 	lg: "64em",
@@ -11,6 +11,17 @@ const breakpoints = {
 }
 
 const theme = extendTheme({
+	styles: {
+		global: {
+			body: {
+				transitionProperty: "all",
+				transitionDuration: "normal",
+			},
+		},
+	},
+	config: {
+		disableTransitionOnChange: false,
+	},
 	semanticTokens: {
 		colors: {
 			text: {

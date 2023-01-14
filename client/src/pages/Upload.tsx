@@ -17,10 +17,6 @@ import {
 	PopoverCloseButton,
 	IconButton,
 	Portal,
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbSeparator,
 } from "@chakra-ui/react"
 import React, { FormEvent, useState } from "react"
 import { CustomDropzone } from "../components"
