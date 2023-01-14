@@ -16,16 +16,25 @@ import {
 	DrawerHeader,
 	DrawerOverlay,
 	useColorMode,
+	useToast
 } from "@chakra-ui/react"
+import { useNavigate } from "react-router-dom"
 import logo from "../assets/logo.svg"
 import { HamburgerIcon, SunIcon, MoonIcon } from "@chakra-ui/icons"
+import { useContractContext } from "../context/ContractContext"
 
 export interface INavbarProps {}
 
 const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
+	// chakra util function from doc
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const menuRef = useRef<any>()
 	const { colorMode, toggleColorMode } = useColorMode()
+	const toast = useToast()
+	// call hook from react-router-dom
+	const navigate = useNavigate()
+	// destructure from ContractContext
+	const { connect, address } = useContractContext()
 
 	return (
 		<Flex
@@ -102,7 +111,30 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 						onClick={toggleColorMode}
 						icon={colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
 					/>
-					<Button bg="orange.300">Connect Wallet</Button>
+					<Button bg="orange.300"
+						onClick={async () => {
+							if (address) {
+								navigate('upload')
+							} else {
+								const isConnected = await connect()
+								if (isConnected) {
+									toast({
+										title: 'Successfully connected :)',
+										status: 'success',
+										isClosable: true,
+									})
+								} else {
+									toast({
+										title: 'Failed to connect :(',
+										status: 'error',
+										isClosable: true,
+									})
+								}
+							}
+						}}
+					>
+						{address ? "upload asset" : "connect wallet"}
+					</Button>
 				</Flex>
 				<Drawer
 					isOpen={isOpen}

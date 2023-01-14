@@ -11,7 +11,6 @@ const CustomDropzonePage: React.FunctionComponent<ICustomDropzonePageProps> = (
 ) => {
 	const onDrop = useCallback((acceptedFiles: any) => {
         const file = acceptedFiles[0]
-        const { path } = file
         setUploadImage(file)
 	}, [])
 

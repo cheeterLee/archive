@@ -10,6 +10,7 @@ import {
 import React, { FormEvent, useState } from "react"
 import { CustomDropzone } from "../components"
 import { Web3Storage } from "web3.storage"
+import { useContractContext } from "../context/ContractContext"
 
 const client = new Web3Storage({
 	token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDNlOERBMTYyRmQyQjY5OTZlMWQzZDUyNmUwZmY0MTM4NGI5Q2ZiRmIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzM1NzYyMzQ0ODUsIm5hbWUiOiJldmlkZW5jZSJ9.toX_pod8vFLzoWDY3Ws2EbwqjjZRSTpyKYc2SKT3rP8",
@@ -24,6 +25,10 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 	const [imageUrl, setImageUrl] = useState<string>("")
 	// state for caption input
 	const [caption, setCaption] = useState("")
+    // state for loading
+    const [isLoading, setIsLoading] = useState(false)
+    // destructure from context
+    const { createImageAsset } = useContractContext()
 
 	const uploadFile = async () => {
 		const rootCid = await client.put([uploadImage])
@@ -38,7 +43,15 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault()
 		console.log("submitting....")
-		uploadFile()
+        setIsLoading(true)
+        // upload file to ipfs
+		await uploadFile()
+        // communicate with blockchain
+        console.log('caption', caption, 'url', imageUrl)
+        await createImageAsset(caption, imageUrl)
+        setIsLoading(false)
+        setCaption('')
+        setImageUrl('')
 	}
 
 	return (
@@ -74,7 +87,7 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 							onChange={(e) => setCaption(e.target.value)}
 							value={caption}
 						/>
-						<Button type="submit">Submit</Button>
+						<Button isLoading={isLoading} loadingText='submitting...' type="submit">Submit</Button>
 					</Stack>
 				</form>
 			</Flex>

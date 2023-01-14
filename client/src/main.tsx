@@ -3,8 +3,9 @@ import { createRoot } from "react-dom/client"
 import App from "./App"
 import { BrowserRouter } from "react-router-dom"
 import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react"
-import { ChakraProvider } from '@chakra-ui/react'
-import theme from '../src/chakra/theme'
+import { ChakraProvider } from "@chakra-ui/react"
+import theme from "../src/chakra/theme"
+import { ContractContextProvider } from "./context/ContractContext"
 
 const container = document.getElementById("root")
 const root = createRoot(container!)
@@ -14,7 +15,9 @@ root.render(
 		<BrowserRouter>
 			<ThirdwebProvider desiredChainId={ChainId.Goerli}>
 				<ChakraProvider theme={theme}>
-					<App />
+					<ContractContextProvider>
+						<App />
+					</ContractContextProvider>
 				</ChakraProvider>
 			</ThirdwebProvider>
 		</BrowserRouter>
