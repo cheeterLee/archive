@@ -14,7 +14,7 @@ contract ImageAsset {
     // returns the idx of image uploaded
     function createImageAsset(address _owner, string memory _caption, string memory _imageUrl) public returns (uint256) {
         Image storage image = images[numberOfImages];
-        image.owneer = _owner;
+        image.owneer = _owner; // Typo Orz...
         image.caption = _caption;
         image.imageUrl = _imageUrl;
         numberOfImages++;

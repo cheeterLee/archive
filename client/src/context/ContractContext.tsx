@@ -11,6 +11,7 @@ type ContractContext = {
     address: string | undefined
     contract: any
     createImageAsset: any
+    getImageAssets: any
 }
 
 const ContractContext = createContext({} as ContractContext)
@@ -38,12 +39,26 @@ export const ContractContextProvider = ({ children }: ContractContextProviderPro
         }
     }
 
+    const getImageAssets = async () => {
+        const images = await contract!.call('getImageAssets')
+
+        const parsedImages = images.map((image: any, i: number) => ({
+            owner: image.owneer, // Typo in smart contract...
+            caption: image.caption,
+            imageUrl: image.imageUrl,
+            pId: i,
+        }))
+        console.log(parsedImages)
+        return parsedImages
+    }
+
     return (
         <ContractContext.Provider value={{
             connect,
             address,
             contract,
-            createImageAsset: publishAsset
+            createImageAsset: publishAsset,
+            getImageAssets,
         }}>
             {children}
         </ContractContext.Provider>
