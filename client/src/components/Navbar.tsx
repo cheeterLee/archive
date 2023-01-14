@@ -54,7 +54,15 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 						xl: "flex",
 					}}
 				>
-					Archive.com
+					<span
+						style={{
+							textDecoration: "underline #ED8936",
+							textUnderlineOffset: "3px",
+						}}
+					>
+						Archive
+					</span>
+					.com
 				</Heading>
 			</Flex>
 			<Flex alignItems="center" gap="2rem" fontSize="1.5rem">
@@ -94,7 +102,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 						onClick={toggleColorMode}
 						icon={colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
 					/>
-					<Button>Connect Wallet</Button>
+					<Button bg="orange.300">Connect Wallet</Button>
 				</Flex>
 				<Drawer
 					isOpen={isOpen}

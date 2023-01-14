@@ -26,7 +26,7 @@ const CustomDropzonePage: React.FunctionComponent<ICustomDropzonePageProps> = (
 			h={400}
 			p={50}
 			mt={7}
-            mb={2}
+            mb={5}
 			borderRadius={5}
 			{...getRootProps()}
 		>

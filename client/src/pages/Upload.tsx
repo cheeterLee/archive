@@ -7,7 +7,7 @@ export interface IUploadPageProps {}
 const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 	return (
 		<Flex
-			p="4rem"
+			p="3rem"
 			justifyContent="center"
 			flexDirection="column"
 			alignItems="center"
@@ -24,12 +24,14 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 					Your asset will be stored on IPFS and visible on Eth
 					blockchain.
 				</Text>
+                <form>
 
 				<CustomDropzone />
 				<Stack>
 					<Input placeholder="A short caption..." />
 					<Button>Submit</Button>
 				</Stack>
+                </form>
 			</Flex>
 		</Flex>
 	)
