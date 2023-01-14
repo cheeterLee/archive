@@ -20,7 +20,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
-    "react-router-dom": "^6.6.2"
+    "react-router-dom": "^6.6.2",
+    "web3.storage": "^4.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.9",

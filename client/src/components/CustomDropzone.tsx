@@ -1,15 +1,17 @@
 import { Flex, Text } from "@chakra-ui/react"
 import React, { useCallback, useState } from "react"
 import { useDropzone } from "react-dropzone"
-3
 
-export interface ICustomDropzonePageProps {}
+export interface ICustomDropzonePageProps {
+    setUploadImage: (img: any) => void
+}
 
 const CustomDropzonePage: React.FunctionComponent<ICustomDropzonePageProps> = (
-	props
+	{ setUploadImage }
 ) => {
 	const onDrop = useCallback((acceptedFiles: any) => {
-		console.log(acceptedFiles)
+        const file = acceptedFiles[0]
+        setUploadImage(file)
 	}, [])
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
