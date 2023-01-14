@@ -116,14 +116,14 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
 							if (address) {
 								navigate('upload')
 							} else {
-								const isConnected = await connect()
-								if (isConnected) {
+								try {
+									await connect()
 									toast({
 										title: 'Successfully connected :)',
 										status: 'success',
 										isClosable: true,
 									})
-								} else {
+								} catch (error) { //TODO bug
 									toast({
 										title: 'Failed to connect :(',
 										status: 'error',

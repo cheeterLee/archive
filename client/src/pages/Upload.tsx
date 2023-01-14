@@ -6,6 +6,7 @@ import {
 	Text,
 	Stack,
 	Image,
+    useToast,
 } from "@chakra-ui/react"
 import React, { FormEvent, useState } from "react"
 import { CustomDropzone } from "../components"
@@ -19,6 +20,8 @@ const client = new Web3Storage({
 export interface IUploadPageProps {}
 
 const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
+    // chakra toast
+    const toast = useToast()
 	// upload image file captured from CustomDropzone
 	const [uploadImage, setUploadImage] = useState<any>(null)
 	// imageUrl returned from ipfs and to write into smart contract
@@ -43,12 +46,26 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault()
 		console.log("submitting....")
+        console.log('imageUrl', imageUrl);
         setIsLoading(true)
-        // upload file to ipfs
-		await uploadFile()
-        // communicate with blockchain
-        console.log('caption', caption, 'url', imageUrl)
-        await createImageAsset(caption, imageUrl)
+        try {
+            // upload file to ipfs
+            await uploadFile()
+            // communicate with blockchain
+            console.log('caption', caption, 'url', imageUrl)
+            // await createImageAsset(caption, imageUrl)
+            toast({
+                title: 'Successfully submitted :)',
+                status: 'success',
+                isClosable: true,
+            })
+        } catch (error) {
+            toast({
+                title: 'Failed to submit :(',
+                status: 'error',
+                isClosable: true,
+            })
+        }
         setIsLoading(false)
         setCaption('')
         setImageUrl('')
@@ -76,7 +93,7 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 
 				<form onSubmit={handleSubmit}>
 					{uploadImage === null ? (
-						<CustomDropzone setUploadImage={setUploadImage} />
+						<CustomDropzone setUploadImage={setUploadImage} setImageUrl={setImageUrl} />
 					) : (
 						<Image p='2rem' w='400px' h='400px' objectFit='cover' src={URL.createObjectURL(uploadImage)} />
 					)}
