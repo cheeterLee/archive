@@ -9,49 +9,50 @@ import {
 	Avatar,
 	Flex,
 	IconButton,
-	Box,
 	Text,
-	Heading,
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem,
 } from "@chakra-ui/react"
-import { BiLike, BiChat, BiShare } from 'react-icons/bi'
-import { BsThreeDotsVertical } from 'react-icons/bs' 
+import { BiLike, BiChat, BiShoppingBag } from "react-icons/bi"
+import { BsThreeDotsVertical, BsEyeSlash } from "react-icons/bs"
 
 export interface IImageCardProps {
-    owner: string
-    caption: string
-    imageUrl: string
+	owner: string
+	caption: string
+	imageUrl: string
 }
 
-const ImageCard: React.FunctionComponent<IImageCardProps> = ({ owner, caption, imageUrl }) => {
-    
-
+const ImageCard: React.FunctionComponent<IImageCardProps> = ({
+	owner,
+	caption,
+	imageUrl,
+}) => {
 	return (
-		<Card maxW='400px' padding='1rem 2rem'>
+		<Card maxW="400px" padding="1rem 2rem">
 			<CardHeader>
 				<Flex>
-					<Flex flex="1" gap="4" alignItems="center" maxW='100%'>
-						<Avatar/>
+					<Flex flex="1" gap="4" alignItems="center" maxW="100%">
+						<Avatar />
 						<Text noOfLines={1}>{owner}</Text>
 					</Flex>
-					<IconButton
-						variant="ghost"
-						colorScheme="gray"
-						aria-label="See menu"
-						icon={<BsThreeDotsVertical />}
-					/>
+					<Menu>
+						<MenuButton as={IconButton} aria-labe='options' variant='ghost' icon={<BsThreeDotsVertical />} />
+						<MenuList>
+							<MenuItem gap='.5rem'><BsEyeSlash />Not interested</MenuItem>
+						</MenuList>
+					</Menu>
 				</Flex>
 			</CardHeader>
 			<CardBody>
 				<Text noOfLines={1}>{caption}</Text>
 			</CardBody>
-			<Image
-				objectFit="cover"
-				src={imageUrl}
-				alt="image asset"
-			/>
+			<Image objectFit="cover" src={imageUrl} alt="image asset" />
 
 			<CardFooter
-				justify="space-between"
+				justify="space-evenly"
+				gap='.2rem'
 				flexWrap="wrap"
 				sx={{
 					"& > button": {
@@ -59,14 +60,14 @@ const ImageCard: React.FunctionComponent<IImageCardProps> = ({ owner, caption, i
 					},
 				}}
 			>
-				<Button flex="1" variant="ghost" leftIcon={<BiLike />}>
+				<Button fontSize='.9rem' flex="1" variant="ghost" leftIcon={<BiLike />}>
 					Like
 				</Button>
-				<Button flex="1" variant="ghost" leftIcon={<BiChat />}>
+				<Button transform='translateX(-10px)' fontSize='.9rem' flex="1" variant="ghost" leftIcon={<BiChat />}>
 					Comment
 				</Button>
-				<Button flex="1" variant="ghost" leftIcon={<BiShare />}>
-					Share
+				<Button fontSize='.9rem' flex="1" variant="ghost" leftIcon={<BiShoppingBag />}>
+					Purchase
 				</Button>
 			</CardFooter>
 		</Card>

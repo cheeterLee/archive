@@ -17,6 +17,8 @@ import {
 	PopoverCloseButton,
 	IconButton,
 	Portal,
+	Divider,
+	Badge
 } from "@chakra-ui/react"
 import React, { FormEvent, useState } from "react"
 import { CustomDropzone } from "../components"
@@ -95,13 +97,13 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 				alignItems="center"
 			>
 				<Heading as="h4" size="md">
-					Drag and drop the phote you want upload
+					Drag and drop the phote you want upload <Badge colorScheme='green'>FAST</Badge>
 				</Heading>
 				<Text>
 					Your asset will be stored on IPFS and visible on Eth
 					blockchain.
 				</Text>
-
+				<Divider />
 				<form onSubmit={handleSubmit}>
 					{uploadImage === null ? (
 						<CustomDropzone setUploadImage={setUploadImage} />
