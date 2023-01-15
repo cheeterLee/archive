@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
 	Card,
 	CardHeader,
@@ -29,8 +29,10 @@ const ImageCard: React.FunctionComponent<IImageCardProps> = ({
 	caption,
 	imageUrl,
 }) => {
+	const [displayed, setDisplayed] = useState<string>('block')
+
 	return (
-		<Card maxW="400px" padding="1rem 2rem">
+		<Card maxW="400px" padding="1rem 2rem" display={displayed}>
 			<CardHeader>
 				<Flex>
 					<Flex flex="1" gap="4" alignItems="center" maxW="100%">
@@ -40,7 +42,9 @@ const ImageCard: React.FunctionComponent<IImageCardProps> = ({
 					<Menu>
 						<MenuButton as={IconButton} aria-labe='options' variant='ghost' icon={<BsThreeDotsVertical />} />
 						<MenuList>
-							<MenuItem gap='.5rem'><BsEyeSlash />Not interested</MenuItem>
+							<MenuItem gap='.5rem' onClick={() => {
+								setDisplayed('none')
+							}}><BsEyeSlash />Not interested</MenuItem>
 						</MenuList>
 					</Menu>
 				</Flex>
