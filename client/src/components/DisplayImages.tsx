@@ -14,8 +14,12 @@ const DisplayImages: React.FunctionComponent<IDisplayImagesProps> = ({
 	isLoading,
 	images,
 }) => {
-	//TODO 1. navigate to detail page
-	//TODO 2. sort the image by date
+	const navigate = useNavigate()
+	const handleNavigate = (image: any) => {
+		navigate(`${image.pId}`, { state: image })
+	}
+
+	//TODO 2. sort the image by date timestamp
 	return (
 		<Box padding="1rem 3rem" display='flex' flexDirection='column' alignItems='center'>
 			<Heading as="h3" size="lg" padding='1rem'>
@@ -44,7 +48,7 @@ const DisplayImages: React.FunctionComponent<IDisplayImagesProps> = ({
 				{!isLoading &&
 					images.length > 0 &&
 					images.map((image: any) => (
-						<ImageCard key={image.pId} {...image} />
+						<ImageCard key={image.pId} {...image} handleClick={() => handleNavigate(image)} />
 					))}
 			</Flex>
 		</Box>

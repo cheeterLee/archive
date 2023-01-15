@@ -26,17 +26,27 @@ export interface IImageCardProps {
 	owner: string
 	caption: string
 	imageUrl: string
+	handleClick: any
 }
 
 const ImageCard: React.FunctionComponent<IImageCardProps> = ({
 	owner,
 	caption,
 	imageUrl,
+	handleClick,
 }) => {
 	const [displayed, setDisplayed] = useState<string>("block")
 
 	return (
-		<Card maxW="400px" padding="1rem 2rem" display={displayed}>
+		<Card
+			maxW="400px"
+			padding="1rem 2rem"
+			display={displayed}
+			// TODO: stop hover event propagating
+			_hover={{
+				bg: "blackAlpha.100",
+			}}
+		>
 			<CardHeader>
 				<Flex>
 					<Flex flex="1" gap="4" alignItems="center" maxW="100%">
@@ -73,10 +83,16 @@ const ImageCard: React.FunctionComponent<IImageCardProps> = ({
 					</Menu>
 				</Flex>
 			</CardHeader>
-			<CardBody>
+			<CardBody cursor="pointer" onClick={handleClick}>
 				<Text noOfLines={1}>{caption}</Text>
 			</CardBody>
-			<Image objectFit="cover" src={imageUrl} alt="image asset" />
+			<Image
+				objectFit="cover"
+				src={imageUrl}
+				alt="image asset"
+				cursor="pointer"
+				onClick={handleClick}
+			/>
 
 			<CardFooter
 				justify="space-evenly"
