@@ -17,6 +17,8 @@ import {
 	PopoverCloseButton,
 	IconButton,
 	Portal,
+	Divider,
+	Badge
 } from "@chakra-ui/react"
 import React, { FormEvent, useState } from "react"
 import { CustomDropzone } from "../components"
@@ -25,8 +27,10 @@ import { useContractContext } from "../context/ContractContext"
 import { useWalletContext } from "../context/WalletContext"
 import { QuestionOutlineIcon, ChevronRightIcon } from "@chakra-ui/icons"
 
+const VITE_API_KEY = import.meta.env.VITE_API_KEY as string
+
 const client = new Web3Storage({
-	token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDNlOERBMTYyRmQyQjY5OTZlMWQzZDUyNmUwZmY0MTM4NGI5Q2ZiRmIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzM1NzYyMzQ0ODUsIm5hbWUiOiJldmlkZW5jZSJ9.toX_pod8vFLzoWDY3Ws2EbwqjjZRSTpyKYc2SKT3rP8",
+	token: VITE_API_KEY,
 })
 
 export interface IUploadPageProps {}
@@ -95,13 +99,13 @@ const UploadPage: React.FunctionComponent<IUploadPageProps> = (props) => {
 				alignItems="center"
 			>
 				<Heading as="h4" size="md">
-					Drag and drop the phote you want upload
+					Drag and drop the phote you want upload <Badge colorScheme='green'>FAST</Badge>
 				</Heading>
 				<Text>
 					Your asset will be stored on IPFS and visible on Eth
 					blockchain.
 				</Text>
-
+				<Divider />
 				<form onSubmit={handleSubmit}>
 					{uploadImage === null ? (
 						<CustomDropzone setUploadImage={setUploadImage} />

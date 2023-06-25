@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import {
 	Card,
 	CardHeader,
@@ -9,49 +9,94 @@ import {
 	Avatar,
 	Flex,
 	IconButton,
-	Box,
 	Text,
-	Heading,
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem,
 } from "@chakra-ui/react"
-import { BiLike, BiChat, BiShare } from 'react-icons/bi'
-import { BsThreeDotsVertical } from 'react-icons/bs' 
+import { BiLike, BiChat, BiShoppingBag } from "react-icons/bi"
+import {
+	BsThreeDotsVertical,
+	BsEyeSlash,
+	BsHandThumbsDown,
+} from "react-icons/bs"
 
 export interface IImageCardProps {
-    owner: string
-    caption: string
-    imgUrl: string
+	owner: string
+	caption: string
+	imageUrl: string
+	handleClick: any
 }
 
-const ImageCard: React.FunctionComponent<IImageCardProps> = ({ owner, caption, imgUrl }) => {
-    
+const ImageCard: React.FunctionComponent<IImageCardProps> = ({
+	owner,
+	caption,
+	imageUrl,
+	handleClick,
+}) => {
+	const [displayed, setDisplayed] = useState<string>("block")
 
 	return (
-		<Card maxW='400px' padding='1rem 2rem'>
+		<Card
+			maxW="400px"
+			padding="1rem 2rem"
+			display={displayed}
+			// TODO: stop hover event propagating
+			_hover={{
+				bg: "blackAlpha.100",
+			}}
+		>
 			<CardHeader>
 				<Flex>
-					<Flex flex="1" gap="4" alignItems="center" maxW='100%'>
-						<Avatar/>
+					<Flex flex="1" gap="4" alignItems="center" maxW="100%">
+						<Avatar />
 						<Text noOfLines={1}>{owner}</Text>
 					</Flex>
-					<IconButton
-						variant="ghost"
-						colorScheme="gray"
-						aria-label="See menu"
-						icon={<BsThreeDotsVertical />}
-					/>
+					<Menu>
+						<MenuButton
+							as={IconButton}
+							aria-labe="options"
+							variant="ghost"
+							icon={<BsThreeDotsVertical />}
+						/>
+						<MenuList>
+							<MenuItem
+								gap=".5rem"
+								onClick={() => {
+									setDisplayed("none")
+								}}
+							>
+								<BsEyeSlash />
+								Not interested
+							</MenuItem>
+							<MenuItem
+								gap=".5rem"
+								onClick={() => {
+									//TODO navigate to report
+								}}
+							>
+								<BsHandThumbsDown />
+								Report
+							</MenuItem>
+						</MenuList>
+					</Menu>
 				</Flex>
 			</CardHeader>
-			<CardBody>
+			<CardBody cursor="pointer" onClick={handleClick}>
 				<Text noOfLines={1}>{caption}</Text>
 			</CardBody>
 			<Image
 				objectFit="cover"
-				src={imgUrl}
+				src={imageUrl}
 				alt="image asset"
+				cursor="pointer"
+				onClick={handleClick}
 			/>
 
 			<CardFooter
-				justify="space-between"
+				justify="space-evenly"
+				gap=".2rem"
 				flexWrap="wrap"
 				sx={{
 					"& > button": {
@@ -59,14 +104,30 @@ const ImageCard: React.FunctionComponent<IImageCardProps> = ({ owner, caption, i
 					},
 				}}
 			>
-				<Button flex="1" variant="ghost" leftIcon={<BiLike />}>
+				<Button
+					fontSize=".9rem"
+					flex="1"
+					variant="ghost"
+					leftIcon={<BiLike />}
+				>
 					Like
 				</Button>
-				<Button flex="1" variant="ghost" leftIcon={<BiChat />}>
+				<Button
+					transform="translateX(-10px)"
+					fontSize=".9rem"
+					flex="1"
+					variant="ghost"
+					leftIcon={<BiChat />}
+				>
 					Comment
 				</Button>
-				<Button flex="1" variant="ghost" leftIcon={<BiShare />}>
-					Share
+				<Button
+					fontSize=".9rem"
+					flex="1"
+					variant="ghost"
+					leftIcon={<BiShoppingBag />}
+				>
+					Purchase
 				</Button>
 			</CardFooter>
 		</Card>
